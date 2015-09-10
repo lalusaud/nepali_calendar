@@ -1,6 +1,7 @@
 # Nepali Calendar
 
 [![Build Status](https://travis-ci.org/lalusaud/nepali_calendar.svg)](https://travis-ci.org/lalusaud/nepali_calendar)
+[![Gem Version](https://badge.fury.io/rb/nepali_calendar.svg)](http://badge.fury.io/rb/nepali_calendar)
 
 A Ruby gem for generating Nepali Calendar (Bikram Sambat Calendar). You can also convert dates between BS and AD.
 
