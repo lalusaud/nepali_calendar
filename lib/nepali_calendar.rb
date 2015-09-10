@@ -99,32 +99,32 @@ module NepaliCalendar
     }
   end
 
-  ad_month = [31,28,31,30,31,30,31,31,30,31,30,31]
-  ad_month_leap = [31,29,31,30,31,30,31,31,30,31,30,31]
-
   def self.ad_to_bs(year, month, day)
-    date_eng = "#{year}/#{month}/#{day}"
-    return unless date_in_range?(date_eng, 'ad')
+    date_ad = "#{year}/#{month}/#{day}"
+    return unless date_in_range?(date_ad, 'ad')
 
-    days = total_days(date_eng, reference_date_ad)
+    ref_day_nep = ref_date['ad_to_bs']['bs']
+    ref_day_eng = ref_date['ad_to_bs']['ad']
 
-    i = y = reference_date_bs.to_s[0..3].to_i
-    j = m = reference_date_bs.to_s[5..6].to_i
-    d = reference_date_bs.to_s[8..9].to_i
+    days = total_days(date_ad, ref_day_eng)
+
+    year, month, day = ref_day_nep.split('/').map(&:to_i)
+    i = year
+    j = month
 
     while(days != 0) do
-      month_days = bs["#{i}"][j-1]
-      d += 1
+      bs_month_days = bs["#{i}"][j-1]
+      day += 1
 
-      if d > month_days
-        m += 1
-        d  = 1
+      if day > bs_month_days
+        month += 1
+        day = 1
         j += 1
       end
 
-      if m > 12
-        y += 1
-        m  = 1
+      if month > 12
+        year += 1
+        month = 1
       end
 
       if j > 12
@@ -135,11 +135,46 @@ module NepaliCalendar
       days -= 1
     end
 
-    "#{y}/#{m}/#{d}"
+    Date.parse("#{year}/#{month}/#{day}")
+  end
+
+  def self.bs_to_ad(year, month, day)
+    date_bs = "#{year}/#{month}/#{day}"
+    return unless date_in_range?(date_bs, 'bs')
+
+    ref_day_nep = ref_date['bs_to_ad']['bs']
+    ref_day_eng = ref_date['bs_to_ad']['ad']
+
+    ref_year, ref_month, ref_day = ref_day_nep.split('/').map(&:to_i)
+    k = ref_year
+
+    # No. of Days from year
+    i = 0
+    total_days = 0
+    j = 0
+    while(i < (year.to_i - ref_year)) do
+      i += 1
+      while(j < 12) do
+        total_days += bs["#{k}"][j]
+        j += 1
+      end
+      j = 0
+      k += 1
+    end
+
+    # No. of Days from month
+    j = 0
+    while(j < (month.to_i - 1)) do
+      total_days += bs["#{k}"][j]
+      j += 1
+    end
+
+    total_days += (day.to_i - ref_day)
+    Date.parse(ref_day_eng) + total_days
   end
 
   def self.total_days(date_eng, reference_date)
-    (Date.parse(date_eng) - reference_date).to_i
+    (Date.parse(date_eng) - Date.parse(reference_date)).to_i
   end
 
   def self.date_in_range?(date, type)
@@ -148,21 +183,21 @@ module NepaliCalendar
 
     case type
     when 'ad'
-      Date.parse(date) > reference_date_ad
+      Date.parse(date) > Date.parse(ref_date['ad_to_bs']['ad'])
     when 'bs'
-      Date.parse(date) > reference_date_bs
+      Date.parse(date) > Date.parse(ref_date['ad_to_bs']['bs'])
     else
       raise Exception.new("Invalid date type!")
     end
   end
 
-  def self.reference_date_ad
-    Date.parse('1944/01/01')
+  def self.ref_date
+    {
+      'bs_to_ad' => { 'bs' => '2000/01/01', 'ad' => '1943/04/14' },
+      'ad_to_bs' => { 'bs' => '2000/09/17', 'ad' => '1944/01/01'}
+    }
   end
 
-  def self.reference_date_bs
-    Date.parse('2000/09/17')
-  end
-
-  puts ad_to_bs('2015', '09', '03')
+  # puts ad_to_bs('2015', '09', '09')
+  # puts bs_to_ad('2072', '05', '23')
 end
