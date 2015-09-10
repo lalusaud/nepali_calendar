@@ -4,22 +4,22 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'nepali_calendar/version'
 
 Gem::Specification.new do |spec|
-  spec.name                   = "nepali_calendar"
+  spec.name                   = 'nepali_calendar'
   spec.version                = NepaliCalendar::VERSION
-  spec.authors                = ["Lal B. Saud"]
-  spec.email                  = ["lalusaud@gmail.com"]
+  spec.authors                = ['Lal B. Saud']
+  spec.email                  = ['lalusaud@gmail.com']
   spec.summary                = %q{Generate Nepali Calendar and convert dates between BS & AD}
   spec.description            = %q{Generate Nepali Calendar (Bikram Sambat) and convert dates between BS & AD.}
-  spec.homepage               = "https://github.com/lalusaud/nepali_calendar"
-  spec.license                = "MIT"
+  spec.homepage               = 'https://github.com/lalusaud/nepali_calendar'
+  spec.license                = 'MIT'
 
   spec.files                  = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
-  spec.bindir                 = "exe"
+  spec.bindir                 = 'exe'
   spec.executables            = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
-  spec.require_paths          = ["lib"]
+  spec.require_paths          = ['lib']
   spec.required_ruby_version  = '>= 1.9.3'
 
-  spec.add_development_dependency "bundler", "~> 1.10.6"
-  spec.add_development_dependency "rake", "~> 10.0"
-  spec.add_development_dependency "rspec", "~> 3.2"
+  spec.add_development_dependency 'bundler', '~> 1.10.6'
+  spec.add_development_dependency 'rake', '~> 10.0'
+  spec.add_development_dependency 'rspec', '~> 3.2'
 end
