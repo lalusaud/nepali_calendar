@@ -150,12 +150,12 @@ module NepaliCalendar
 
     # No. of Days from year
     i = 0
-    total_days = 0
+    days = 0
     j = 0
     while(i < (year.to_i - ref_year)) do
       i += 1
       while(j < 12) do
-        total_days += bs["#{k}"][j]
+        days += bs["#{k}"][j]
         j += 1
       end
       j = 0
@@ -165,12 +165,12 @@ module NepaliCalendar
     # No. of Days from month
     j = 0
     while(j < (month.to_i - 1)) do
-      total_days += bs["#{k}"][j]
+      days += bs["#{k}"][j]
       j += 1
     end
 
-    total_days += (day.to_i - ref_day)
-    Date.parse(ref_day_eng) + total_days
+    days += (day.to_i - ref_day)
+    Date.parse(ref_day_eng) + days
   end
 
   def self.total_days(date_eng, reference_date)
@@ -197,7 +197,4 @@ module NepaliCalendar
       'ad_to_bs' => { 'bs' => '2000/09/17', 'ad' => '1944/01/01'}
     }
   end
-
-  # puts ad_to_bs('2015', '09', '09')
-  # puts bs_to_ad('2072', '05', '23')
 end
