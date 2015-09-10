@@ -5,6 +5,11 @@ describe NepaliCalendar do
     expect(NepaliCalendar::VERSION).not_to be nil
   end
 
+  it 'responds to total_days & ref_date' do
+    expect(NepaliCalendar::Calendar).to respond_to(:total_days)
+    expect(NepaliCalendar::Calendar).to respond_to(:ref_date)
+  end
+
   it 'converts date from ad_to_bs' do
     expect(NepaliCalendar::Calendar.ad_to_bs('2015', '09', '09')).to eq(Date.parse('2072-05-23'))
     expect(NepaliCalendar::Calendar.ad_to_bs('2010', '04', '16')).to eq(Date.parse('2067-01-03'))
