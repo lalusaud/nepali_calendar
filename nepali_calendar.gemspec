@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.version                = NepaliCalendar::VERSION
   spec.authors                = ['Lal B. Saud']
   spec.email                  = ['lalusaud@gmail.com']
-  spec.summary                = %q{Generate Nepali Calendar and convert dates between BS & AD}
-  spec.description            = %q{Generate Nepali Calendar (Bikram Sambat) and convert dates between BS & AD.}
+  spec.summary                = 'Get dates for BS & AD Calendars'
+  spec.description            = 'Generate Nepali Calendar (Bikram Sambat) and convert dates between BS & AD.'
   spec.homepage               = 'https://github.com/lalusaud/nepali_calendar'
   spec.license                = 'MIT'
 
