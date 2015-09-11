@@ -10,6 +10,16 @@ describe NepaliCalendar do
     expect(NepaliCalendar::Calendar).to respond_to(:ref_date)
   end
 
+  it 'responds to date_in_range? and valid_date?' do
+    expect(NepaliCalendar::Calendar).to respond_to(:date_in_range?)
+    expect(NepaliCalendar::Calendar).to respond_to(:valid_date?)
+  end
+
+  it 'responds to get_ad_date & get_bs_date' do
+    expect(NepaliCalendar::Calendar).to respond_to(:get_ad_date)
+    expect(NepaliCalendar::Calendar).to respond_to(:get_bs_date)
+  end
+
   it 'converts date from ad_to_bs' do
     date1 = Date.parse('2072-05-23')
     date2 = Date.parse('2067-01-03')
