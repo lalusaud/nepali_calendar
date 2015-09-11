@@ -21,7 +21,7 @@ module NepaliCalendar
       j = month
 
       while days != 0
-        bs_month_days = NepaliCalendar::BS["#{i}"][j - 1]
+        bs_month_days = NepaliCalendar::BS[i][j - 1]
         day += 1
 
         if day > bs_month_days
@@ -67,7 +67,7 @@ module NepaliCalendar
       while i < (year.to_i - ref_year)
         i += 1
         while j < 12
-          days += NepaliCalendar::BS["#{k}"][j]
+          days += NepaliCalendar::BS[k][j]
           j += 1
         end
         j = 0
@@ -77,7 +77,7 @@ module NepaliCalendar
       # No. of Days from month
       j = 0
       while j < (month.to_i - ref_month)
-        days += NepaliCalendar::BS["#{k}"][j]
+        days += NepaliCalendar::BS[k][j]
         j += 1
       end
 
