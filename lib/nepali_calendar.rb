@@ -85,24 +85,31 @@ module NepaliCalendar
       Date.parse(ref_date['bs_to_ad']['ad']) + days
     end
 
-    def self.total_days(date_eng, reference_date)
-      days = date_eng - reference_date
-      days.to_i
+    def self.today
+      today = Date.today
+      ad_to_bs(today.year, today.month, today.day)
     end
 
-    def self.date_in_range?(date, reference_date)
-      date > reference_date
-    end
+    private
 
-    def self.valid_date?(year, month, day)
-      Date.valid_date?(year.to_i, month.to_i, day.to_i)
-    end
+      def self.total_days(date_eng, reference_date)
+        days = date_eng - reference_date
+        days.to_i
+      end
 
-    def self.ref_date
-      {
-        'bs_to_ad' => { 'bs' => '2000/01/01', 'ad' => '1943/04/14' },
-        'ad_to_bs' => { 'bs' => '2000/09/17', 'ad' => '1944/01/01' }
-      }
-    end
+      def self.date_in_range?(date, reference_date)
+        date > reference_date
+      end
+
+      def self.valid_date?(year, month, day)
+        Date.valid_date?(year.to_i, month.to_i, day.to_i)
+      end
+
+      def self.ref_date
+        {
+          'bs_to_ad' => { 'bs' => '2000/01/01', 'ad' => '1943/04/14' },
+          'ad_to_bs' => { 'bs' => '2000/09/17', 'ad' => '1944/01/01' }
+        }
+      end
   end
 end

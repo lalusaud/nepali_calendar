@@ -33,4 +33,10 @@ describe NepaliCalendar do
     expect(NepaliCalendar::Calendar.bs_to_ad('2072', '05', '23')).to eq(date1)
     expect(NepaliCalendar::Calendar.bs_to_ad('2067', '01', '03')).to eq(date2)
   end
+
+  it 'returns today' do
+    today = Date.today
+    today = NepaliCalendar::Calendar.ad_to_bs(today.year, today.month, today.day)
+    expect(NepaliCalendar::Calendar.today).to eq(today)
+  end
 end
