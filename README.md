@@ -5,7 +5,7 @@
 [![Code Climate](https://codeclimate.com/github/lalusaud/nepali_calendar/badges/gpa.svg)](https://codeclimate.com/github/lalusaud/nepali_calendar)
 [![Test Coverage](https://codeclimate.com/github/lalusaud/nepali_calendar/badges/coverage.svg)](https://codeclimate.com/github/lalusaud/nepali_calendar/coverage)
 
-A Ruby gem for generating Nepali Calendar (Bikram Sambat Calendar). You can also convert dates between BS and AD.
+A Ruby gem for generating Nepali Calendar (Bikram Sambat Calendar). You can also convert dates between BS and AD. Nepali Calendar is based on the API from [codeartsnepal](http://sourceforge.net/projects/nepalidateconve/).
 
 ## Installation
 
