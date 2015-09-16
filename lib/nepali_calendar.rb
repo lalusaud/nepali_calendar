@@ -5,20 +5,14 @@ require 'date'
 module NepaliCalendar
   class Calendar
 
-    MONTHS = %w{Baisakh Jestha Ashad Shrawn Bhadra Ashwin Kartik Mangshir Poush Magh Falgun Chaitra}
-    DAYS = %w{Aitabar Sombar Mangalbar Budhbar Bihibar Sukrabar Sanibar}
+    attr_reader :bs_year, :bs_month, :bs_day, :bs_wday, :bs_month_name, :bs_wday_name
 
-    def initialize(y = Date.today.year, m = Date.today.month, d = Date.today.day)
-      @year = y
-      @month = m
-      @day = d
-    end
+    MONTHNAMES = %w{nil Baisakh Jestha Ashad Shrawn Bhadra Ashwin Kartik Mangshir Poush Magh Falgun Chaitra}
+    DAYNAMES = %w{nil Aitabar Sombar Mangalbar Budhbar Bihibar Sukrabar Sanibar}
 
-    class << self
-      def today
-        today = Date.today
-        date = Calendar.new.ad_to_bs(today.year, today.month, today.day)
-      end
+    def initialize(year=nil, month=nil, day=nil, wday=nil, month_name=nil, wday_name=nil)
+      @bs_year, @bs_month, @bs_day = year, month, day
+      @bs_wday, @bs_month_name, @bs_wday_name = wday, month_name, wday_name
     end
 
     def ad_to_bs(year, month, day)
@@ -36,16 +30,20 @@ module NepaliCalendar
       year, month, day = ref_day_nep.split('/').map(&:to_i)
       i = year
       j = month
+      wday = 7
 
       while days != 0
         bs_month_days = NepaliCalendar::BS[i][j - 1]
         day += 1
+        wday += 1
 
         if day > bs_month_days
           month += 1
           day = 1
           j += 1
         end
+
+        wday = 1 if wday > 7
 
         if month > 12
           year += 1
@@ -59,7 +57,9 @@ module NepaliCalendar
         days -= 1
       end
 
-      Date.parse("#{year}/#{month}/#{day}")
+      month_name = MONTHNAMES[month]
+      wday_name = DAYNAMES[wday]
+      Calendar.new(year, month, day, wday, month_name, wday_name)
     end
 
     def bs_to_ad(year, month, day)
