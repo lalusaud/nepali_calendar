@@ -4,7 +4,24 @@ require 'date'
 
 module NepaliCalendar
   class Calendar
-    def self.ad_to_bs(year, month, day)
+
+    MONTHS = %w{Baisakh Jestha Ashad Shrawn Bhadra Ashwin Kartik Mangshir Poush Magh Falgun Chaitra}
+    DAYS = %w{Aitabar Sombar Mangalbar Budhbar Bihibar Sukrabar Sanibar}
+
+    def initialize(y = Date.today.year, m = Date.today.month, d = Date.today.day)
+      @year = y
+      @month = m
+      @day = d
+    end
+
+    class << self
+      def today
+        today = Date.today
+        date = Calendar.new.ad_to_bs(today.year, today.month, today.day)
+      end
+    end
+
+    def ad_to_bs(year, month, day)
       fail 'Invalid date!' unless valid_date?(year, month, day)
 
       ref_day_eng = Date.parse(ref_date['ad_to_bs']['ad'])
@@ -15,7 +32,7 @@ module NepaliCalendar
       get_bs_date(days, ref_date['ad_to_bs']['bs'])
     end
 
-    def self.get_bs_date(days, ref_day_nep)
+    def get_bs_date(days, ref_day_nep)
       year, month, day = ref_day_nep.split('/').map(&:to_i)
       i = year
       j = month
@@ -45,7 +62,7 @@ module NepaliCalendar
       Date.parse("#{year}/#{month}/#{day}")
     end
 
-    def self.bs_to_ad(year, month, day)
+    def bs_to_ad(year, month, day)
       fail 'Invalid date!' unless valid_date?(year, month, day)
 
       ref_day_nep = ref_date['bs_to_ad']['bs']
@@ -56,7 +73,7 @@ module NepaliCalendar
       get_ad_date(year, month, day, ref_day_nep)
     end
 
-    def self.get_ad_date(year, month, day, ref_day_nep)
+    def get_ad_date(year, month, day, ref_day_nep)
       ref_year, ref_month, ref_day = ref_day_nep.split('/').map(&:to_i)
       k = ref_year
 
@@ -85,27 +102,22 @@ module NepaliCalendar
       Date.parse(ref_date['bs_to_ad']['ad']) + days
     end
 
-    def self.today
-      today = Date.today
-      ad_to_bs(today.year, today.month, today.day)
-    end
-
     private
 
-      def self.total_days(date_eng, reference_date)
+      def total_days(date_eng, reference_date)
         days = date_eng - reference_date
         days.to_i
       end
 
-      def self.date_in_range?(date, reference_date)
+      def date_in_range?(date, reference_date)
         date > reference_date
       end
 
-      def self.valid_date?(year, month, day)
+      def valid_date?(year, month, day)
         Date.valid_date?(year.to_i, month.to_i, day.to_i)
       end
 
-      def self.ref_date
+      def ref_date
         {
           'bs_to_ad' => { 'bs' => '2000/01/01', 'ad' => '1943/04/14' },
           'ad_to_bs' => { 'bs' => '2000/09/17', 'ad' => '1944/01/01' }
