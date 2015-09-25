@@ -1,0 +1,15 @@
+language: ruby
+rvm:
+  - 2.2.0
+
+script: "bundle exec rspec"
+
+before_install:
+  - gem update bundler
+
+sudo: false
+cache: bundler
+
+addons:
+    code_climate:
+        repo_token: dbf9480f2d27785051ee1f6d499d74e658faaa618e669c41cc6dbbee761baf27
