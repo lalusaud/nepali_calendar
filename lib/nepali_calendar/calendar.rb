@@ -1,8 +1,25 @@
+require 'rails'
+
 module NepaliCalendar
   class Calendar
 
+    attr_accessor :view_context, :options
+
     MONTHNAMES = %w{nil Baisakh Jestha Ashad Shrawn Bhadra Ashwin Kartik Mangshir Poush Magh Falgun Chaitra}
     DAYNAMES = %w{nil Aitabar Sombar Mangalbar Budhbar Bihibar Sukrabar Sanibar}
+
+    def initialize(view_context, options={})
+      @view_context = view_context
+    end
+
+    def render(&block)
+      view_context.render(
+        partial: 'nepali_calendar/bs_calendar',
+        locals: {
+          block: block
+        }
+      )
+    end
 
     def self.ad_to_bs(year, month, day)
       fail 'Invalid date!' unless valid_date?(year, month, day)
