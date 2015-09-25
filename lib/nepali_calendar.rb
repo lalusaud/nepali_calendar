@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-module NepaliCalendar
-=======
 require 'nepali_calendar/version'
 require 'nepali_calendar/bs'
 require 'date'
@@ -127,5 +124,4 @@ module NepaliCalendar
         }
       end
   end
->>>>>>> 9ca03247402237bb7a5f0f901947b85eb8862ae0
 end
