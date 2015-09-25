@@ -1,4 +1,4 @@
-.bundle/
+/.bundle/
 log/*.log
 pkg/
 spec/dummy/
