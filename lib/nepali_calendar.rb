@@ -5,17 +5,10 @@ require 'date'
 module NepaliCalendar
   class Calendar
 
-    attr_reader :bs_year, :bs_month, :bs_day, :bs_wday, :bs_month_name, :bs_wday_name
-
     MONTHNAMES = %w{nil Baisakh Jestha Ashad Shrawn Bhadra Ashwin Kartik Mangshir Poush Magh Falgun Chaitra}
     DAYNAMES = %w{nil Aitabar Sombar Mangalbar Budhbar Bihibar Sukrabar Sanibar}
 
-    def initialize(year=nil, month=nil, day=nil, wday=nil, month_name=nil, wday_name=nil)
-      @bs_year, @bs_month, @bs_day = year, month, day
-      @bs_wday, @bs_month_name, @bs_wday_name = wday, month_name, wday_name
-    end
-
-    def ad_to_bs(year, month, day)
+    def self.ad_to_bs(year, month, day)
       fail 'Invalid date!' unless valid_date?(year, month, day)
 
       ref_day_eng = Date.parse(ref_date['ad_to_bs']['ad'])
@@ -26,7 +19,7 @@ module NepaliCalendar
       get_bs_date(days, ref_date['ad_to_bs']['bs'])
     end
 
-    def get_bs_date(days, ref_day_nep)
+    def self.get_bs_date(days, ref_day_nep)
       year, month, day = ref_day_nep.split('/').map(&:to_i)
       i = year
       j = month
@@ -59,10 +52,14 @@ module NepaliCalendar
 
       month_name = MONTHNAMES[month]
       wday_name = DAYNAMES[wday]
-      Calendar.new(year, month, day, wday, month_name, wday_name)
+      {
+        bs_year: "#{year}", bs_month: "#{format_initial(month)}",
+        bs_day: "#{format_initial(day)}", bs_wday: "#{wday}",
+        bs_month_name: "#{month_name}", bs_wday_name: "#{wday_name}"
+      }
     end
 
-    def bs_to_ad(year, month, day)
+    def self.bs_to_ad(year, month, day)
       fail 'Invalid date!' unless valid_date?(year, month, day)
 
       ref_day_nep = ref_date['bs_to_ad']['bs']
@@ -73,7 +70,7 @@ module NepaliCalendar
       get_ad_date(year, month, day, ref_day_nep)
     end
 
-    def get_ad_date(year, month, day, ref_day_nep)
+    def self.get_ad_date(year, month, day, ref_day_nep)
       ref_year, ref_month, ref_day = ref_day_nep.split('/').map(&:to_i)
       k = ref_year
 
@@ -99,25 +96,35 @@ module NepaliCalendar
       end
 
       days += (day.to_i - ref_day)
-      Date.parse(ref_date['bs_to_ad']['ad']) + days
+      ad = Date.parse(ref_date['bs_to_ad']['ad']) + days
+      {
+        ad_year: "#{ad.year}", ad_month: "#{format_initial(ad.month)}",
+        ad_day: "#{format_initial(ad.day)}", ad_wday: "#{ad.wday}",
+        ad_month_name: "#{Date::MONTHNAMES[ad.month]}",
+        ad_wday_name: "#{ad.strftime("%A")}"
+      }
     end
 
     private
 
-      def total_days(date_eng, reference_date)
+      def self.total_days(date_eng, reference_date)
         days = date_eng - reference_date
         days.to_i
       end
 
-      def date_in_range?(date, reference_date)
+      def self.date_in_range?(date, reference_date)
         date > reference_date
       end
 
-      def valid_date?(year, month, day)
+      def self.valid_date?(year, month, day)
         Date.valid_date?(year.to_i, month.to_i, day.to_i)
       end
 
-      def ref_date
+      def self.format_initial(date)
+        (date < 10) ? "0#{date}" : date
+      end
+
+      def self.ref_date
         {
           'bs_to_ad' => { 'bs' => '2000/01/01', 'ad' => '1943/04/14' },
           'ad_to_bs' => { 'bs' => '2000/09/17', 'ad' => '1944/01/01' }
