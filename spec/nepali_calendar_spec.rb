@@ -2,8 +2,8 @@ require 'spec_helper'
 
 describe NepaliCalendar do
   let(:today) {Date.today}
-  let(:bs_calendar) { NepaliCalendar::Calendar.ad_to_bs('2015', '09', '09') }
-  let(:ad_calendar) { NepaliCalendar::Calendar.bs_to_ad('2072', '05', '23') }
+  let(:bs_calendar) { NepaliCalendar::BsCalendar.ad_to_bs('2015', '09', '09') }
+  let(:ad_calendar) { NepaliCalendar::AdCalendar.bs_to_ad('2072', '05', '23') }
 
   it 'has a version number' do
     expect(NepaliCalendar::VERSION).not_to be nil
@@ -20,8 +20,8 @@ describe NepaliCalendar do
   end
 
   it 'responds to get_ad_date & get_bs_date' do
-    expect(NepaliCalendar::Calendar).to respond_to(:get_ad_date)
-    expect(NepaliCalendar::Calendar).to respond_to(:get_bs_date)
+    expect(NepaliCalendar::AdCalendar).to respond_to(:get_ad_date)
+    expect(NepaliCalendar::BsCalendar).to respond_to(:get_bs_date)
   end
 
   it 'converts date from ad_to_bs' do
