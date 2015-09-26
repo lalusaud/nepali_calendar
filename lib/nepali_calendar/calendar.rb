@@ -33,6 +33,7 @@ module NepaliCalendar
     end
     alias_method :default_inspect, :inspect
     alias_method :inspect, :readable_inspect
+    alias_method :to_s, :readable_inspect
 
     private
 
