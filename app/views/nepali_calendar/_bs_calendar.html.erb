@@ -13,7 +13,20 @@
     </thead>
 
     <tbody>
-      
+      <%= date_range %>
+      <%
+        a = Array.new(35) { 1 }
+        a.each_slice(7) do |week|
+      %><tr><%
+        week.each do |day|
+      %>
+          <td>
+            <%= day %>
+          </td>
+      <%
+          end
+        end
+      %>
     </tbody>
   </table>
 </div>

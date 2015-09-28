@@ -51,6 +51,11 @@ module NepaliCalendar
           month_name: month_name, wday_name: wday_name }
         new('', options)
       end
+
+      def today
+        date = Date.today
+        ad_to_bs(date.year, date.month, date.day)
+      end
     end
   end
 end
