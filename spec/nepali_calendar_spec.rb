@@ -61,6 +61,15 @@ describe NepaliCalendar do
       expect(d3.to_s).to eq('Sanibar, 16 Ashwin, 2072')
     end
 
+    it 'returns beginning of month' do
+      d1 = NepaliCalendar::BsCalendar.ad_to_bs(2015, 10, 30).beginning_of_month
+      expect(d1.to_s).to eq('Aitabar, 1 Kartik, 2072')
+    end
+
+    it 'returns end of month' do
+      d1 = NepaliCalendar::BsCalendar.ad_to_bs(2015, 10, 20).end_of_month
+      expect(d1.to_s).to eq('Sombar, 30 Kartik, 2072')
+    end
   end
 
   context '#AdCalendar' do
