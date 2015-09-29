@@ -63,7 +63,7 @@ module NepaliCalendar
       if wday > 1
         if day < wday
           new_month -= 1
-          new_day += NepaliCalendar::BS[year][month - 2]
+          new_day += month_days(year, month - 2)
         end
         new_day = new_day - wday + 1
       end
@@ -75,9 +75,9 @@ module NepaliCalendar
       if wday < 7
         add_days = 7 - wday
         new_day += add_days
-        if new_day > NepaliCalendar::BS[year][month - 1]
+        if new_day > month_days(year, month - 1)
           new_month += 1
-          new_day -= NepaliCalendar::BS[year][month - 1]
+          new_day -= month_days(year, month - 1)
         end
       end
       bs_date(year, new_month, new_day)
@@ -88,13 +88,17 @@ module NepaliCalendar
     end
 
     def end_of_month
-      bs_date(year, month, NepaliCalendar::BS[year][month - 1])
+      bs_date(year, month, month_days(year, month - 1))
     end
 
     private
       def bs_date(year, month, day)
         ad = NepaliCalendar::AdCalendar.bs_to_ad(year, month, day)
         NepaliCalendar::BsCalendar.ad_to_bs(ad.year, ad.month, ad.day)
+      end
+
+      def month_days(year, month)
+         NepaliCalendar::BS[year][month]
       end
   end
 end
