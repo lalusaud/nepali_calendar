@@ -57,5 +57,27 @@ module NepaliCalendar
         ad_to_bs(date.year, date.month, date.day)
       end
     end
+
+    def beginning_of_week
+      new_day, new_month = day, month
+      if wday > 1
+        if day < wday
+          new_month = new_month - 1
+          new_day += NepaliCalendar::BS[year][month - 2]
+        end
+        new_day = new_day - wday + 1
+      end
+      bs_date(year, new_month, new_day)
+    end
+
+    def beginning_of_month
+      bs_date(year, month, 1)
+    end
+
+    private
+      def bs_date(year, month, day)
+        ad = NepaliCalendar::AdCalendar.bs_to_ad(year, month, day)
+        NepaliCalendar::BsCalendar.ad_to_bs(ad.year, ad.month, ad.day)
+      end
   end
 end

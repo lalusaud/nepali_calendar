@@ -39,6 +39,18 @@ describe NepaliCalendar do
       bs_today = NepaliCalendar::BsCalendar.ad_to_bs(d.year, d.month, d.day)
       expect(bs_today.to_s).to eq(NepaliCalendar::BsCalendar.today.to_s)
     end
+
+    it 'returns beginning of week' do
+      # wday <= 1
+      d1 = NepaliCalendar::BsCalendar.ad_to_bs(2015, 9, 20).beginning_of_week
+      # wday > 1 && day < wday
+      d2 = NepaliCalendar::BsCalendar.ad_to_bs(2015, 9, 19).beginning_of_week
+      # wday > 1 && day > wday
+      d3 = NepaliCalendar::BsCalendar.ad_to_bs(2015, 10, 2).beginning_of_week
+      expect(d1.to_s).to eq('Aitabar, 3 Ashwin, 2072')
+      expect(d2.to_s).to eq('Aitabar, 27 Bhadra, 2072')
+      expect(d3.to_s).to eq('Aitabar, 10 Ashwin, 2072')
+    end
   end
 
   context '#AdCalendar' do
