@@ -6,7 +6,7 @@ module NepaliCalendar
         fail 'Invalid date!' unless valid_date?(year, month, day)
         ref_day_nep = ref_date['bs_to_ad']['bs']
         date_bs = Date.parse("#{year}/#{month}/#{day}")
-        
+
         return unless date_in_range?(date_bs, Date.parse(ref_day_nep))
         get_ad_date(year, month, day, ref_day_nep)
       end
@@ -16,10 +16,11 @@ module NepaliCalendar
         k = ref_year
 
         # No. of Days from year
-        i = j = days = 0
+        i = days = 0
+        j = 1
         while i < (year.to_i - ref_year)
           i += 1
-          while j < 12
+          while j <= 12
             days += NepaliCalendar::BS[k][j]
             j += 1
           end
@@ -28,8 +29,8 @@ module NepaliCalendar
         end
 
         # No. of Days from month
-        j = 0
-        while j < (month.to_i - ref_month)
+        j = 1
+        while j <= (month.to_i - ref_month)
           days += NepaliCalendar::BS[k][j]
           j += 1
         end
