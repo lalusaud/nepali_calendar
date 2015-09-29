@@ -131,10 +131,6 @@ module NepaliCalendar
          Date.parse(ref_date['ad_to_bs']['ad'])
       end
 
-      def get_year_from_days days
-        days/365
-      end
-
       def month_days(year, month)
          NepaliCalendar::BS[year][month]
       end
