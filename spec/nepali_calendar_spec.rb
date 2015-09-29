@@ -51,6 +51,16 @@ describe NepaliCalendar do
       expect(d2.to_s).to eq('Aitabar, 27 Bhadra, 2072')
       expect(d3.to_s).to eq('Aitabar, 10 Ashwin, 2072')
     end
+
+    it 'returns end of week' do
+      d1 = NepaliCalendar::BsCalendar.ad_to_bs(2015, 9, 20).end_of_week
+      d2 = NepaliCalendar::BsCalendar.ad_to_bs(2015, 9, 19).end_of_week
+      d3 = NepaliCalendar::BsCalendar.ad_to_bs(2015, 9, 28).end_of_week
+      expect(d1.to_s).to eq('Sanibar, 9 Ashwin, 2072')
+      expect(d2.to_s).to eq('Sanibar, 2 Ashwin, 2072')
+      expect(d3.to_s).to eq('Sanibar, 16 Ashwin, 2072')
+    end
+
   end
 
   context '#AdCalendar' do
