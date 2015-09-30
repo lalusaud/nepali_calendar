@@ -13,15 +13,25 @@
     </thead>
 
     <tbody>
-      <%= date_range %>
       <%
-        a = Array.new(35) { 1 }
-        a.each_slice(7) do |week|
+        if date_range.is_a?(Array)
+          date = date_range[0]
+          date_object = [ date ]
+
+          while(date.to_s != date_range[1].to_s)
+            option = {year: date.year, month: date.month, day: date.day, wday: date.wday}
+            date = NepaliCalendar::BsCalendar.travel 1, option
+            date_object << date
+          end
+        end
+      %>
+      <%
+        date_object.each_slice(7) do |week|
       %><tr><%
         week.each do |day|
       %>
           <td>
-            <%= day %>
+            <%= day.day %>
           </td>
       <%
           end

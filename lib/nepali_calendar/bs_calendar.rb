@@ -132,5 +132,16 @@ module NepaliCalendar
       def month_days(year, month)
          NepaliCalendar::BS[year][month]
       end
+
+      def start_date
+        NepaliCalendar::BsCalendar.today
+      end
+
+      def date_range
+        [
+          start_date.beginning_of_month.beginning_of_week,
+          start_date.end_of_month.end_of_week
+        ]
+      end
   end
 end
