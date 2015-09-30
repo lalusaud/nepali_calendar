@@ -3,11 +3,9 @@ module NepaliCalendar
 
     class << self
       def bs_to_ad(year, month, day)
-        fail 'Invalid date!' unless valid_date?(year, month, day)
         ref_day_nep = ref_date['bs_to_ad']['bs']
-        date_bs = Date.parse("#{year}/#{month}/#{day}")
-
-        return unless date_in_range?(date_bs, Date.parse(ref_day_nep))
+        date_bs = "#{year}/#{month}/#{day}"
+        return unless date_in_range?(date_bs, ref_day_nep)
         get_ad_date(year, month, day, ref_day_nep)
       end
 

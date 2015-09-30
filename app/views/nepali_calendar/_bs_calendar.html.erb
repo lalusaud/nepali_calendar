@@ -1,4 +1,20 @@
 <div class="bs_calendar">
+  <%
+    if date_range.is_a?(Array)
+      date = date_range[0]
+      date_object = [ date ]
+
+      while(date.to_s != date_range[1].to_s)
+        option = {year: date.year, month: date.month, day: date.day, wday: date.wday}
+        date = NepaliCalendar::BsCalendar.travel 1, option
+        date_object << date
+      end
+    end
+  %>
+
+  <%= link_to '&laquo; Previous'.html_safe, start_date: previous_day(date_range[0]) %>
+  <%= "#{start_date.month_name}, #{start_date.year}" %>
+  <%= link_to 'Next &raquo;'.html_safe, start_date: next_day(date_range[1]) %>
   <table class="table table-stripped">
     <thead>
       <tr>
@@ -13,18 +29,6 @@
     </thead>
 
     <tbody>
-      <%
-        if date_range.is_a?(Array)
-          date = date_range[0]
-          date_object = [ date ]
-
-          while(date.to_s != date_range[1].to_s)
-            option = {year: date.year, month: date.month, day: date.day, wday: date.wday}
-            date = NepaliCalendar::BsCalendar.travel 1, option
-            date_object << date
-          end
-        end
-      %>
       <%
         date_object.each_slice(7) do |week|
       %><tr><%

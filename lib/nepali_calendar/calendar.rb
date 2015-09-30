@@ -52,6 +52,7 @@ module NepaliCalendar
 
       def self.date_in_range?(date, reference_date)
         date > reference_date
+        # TODO: Check for both BS & AD (Upper and Lower limit)
       end
 
       def self.valid_date?(year, month, day)

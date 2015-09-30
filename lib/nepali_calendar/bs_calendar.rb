@@ -6,7 +6,7 @@ module NepaliCalendar
 
     class << self
       def ad_to_bs(year, month, day)
-        fail 'Invalid date!' unless valid_date?(year, month, day)
+        fail 'Invalid AD date!' unless valid_date?(year, month, day)
 
         ref_day_eng = get_ref_day_eng
         date_ad = Date.parse("#{year}/#{month}/#{day}")
@@ -48,7 +48,7 @@ module NepaliCalendar
 
     def end_of_month
       date = {year: year, month: month, day: day, wday: wday}
-      days = month_days(year, month) - day
+      days = NepaliCalendar::BS[year][month] - day
       NepaliCalendar::BsCalendar.travel days, date
     end
 
@@ -129,12 +129,16 @@ module NepaliCalendar
          Date.parse(ref_date['ad_to_bs']['ad'])
       end
 
-      def month_days(year, month)
-         NepaliCalendar::BS[year][month]
-      end
-
       def start_date
-        NepaliCalendar::BsCalendar.today
+        date = view_context.params.fetch(:start_date, '')
+        if date.nil? || date.blank?
+          date = NepaliCalendar::BsCalendar.today
+        else
+          year, month, day = date.split('-').map(&:to_i)
+          d = NepaliCalendar::AdCalendar.bs_to_ad(year, month, day)
+          date = NepaliCalendar::BsCalendar.ad_to_bs(d.year, d.month, d.day)
+        end
+        date
       end
 
       def date_range
