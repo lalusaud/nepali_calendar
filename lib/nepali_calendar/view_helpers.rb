@@ -5,15 +5,9 @@ module NepaliCalendar
       NepaliCalendar::BsCalendar.new(self, options).render(&block)
     end
 
-    def previous_day date
+    def travel day, date
       option = {year: date.year, month: date.month, day: date.day, wday: date.wday}
-      date = NepaliCalendar::BsCalendar.travel(-1, option)
-      "#{date.year}-#{date.month}-#{date.day}"
-    end
-
-    def next_day date
-      option = {year: date.year, month: date.month, day: date.day, wday: date.wday}
-      date = NepaliCalendar::BsCalendar.travel(1, option)
+      date = NepaliCalendar::BsCalendar.travel(day, option)
       "#{date.year}-#{date.month}-#{date.day}"
     end
   end

@@ -12,9 +12,9 @@
     end
   %>
 
-  <%= link_to '&laquo; Previous'.html_safe, start_date: previous_day(date_range[0]) %>
+  <%= link_to '&laquo; Previous'.html_safe, start_date: travel(-1, date_range[0]) %>
   <%= "#{start_date.month_name}, #{start_date.year}" %>
-  <%= link_to 'Next &raquo;'.html_safe, start_date: next_day(date_range[1]) %>
+  <%= link_to 'Next &raquo;'.html_safe, start_date: travel(1, date_range[1]) %>
   <table class="table table-stripped">
     <thead>
       <tr>
