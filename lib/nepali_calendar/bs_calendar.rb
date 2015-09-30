@@ -131,14 +131,13 @@ module NepaliCalendar
 
       def start_date
         date = view_context.params.fetch(:start_date, '')
-        if date.nil? || date.blank?
-          date = NepaliCalendar::BsCalendar.today
-        else
-          year, month, day = date.split('-').map(&:to_i)
-          d = NepaliCalendar::AdCalendar.bs_to_ad(year, month, day)
-          date = NepaliCalendar::BsCalendar.ad_to_bs(d.year, d.month, d.day)
-        end
-        date
+        date.blank? ? NepaliCalendar::BsCalendar.today : to_bs_date(date)
+      end
+
+      def to_bs_date(date)
+        d = date.split('-').map(&:to_i)
+        d = NepaliCalendar::AdCalendar.bs_to_ad(d[0], d[1], d[2])
+        NepaliCalendar::BsCalendar.ad_to_bs(d.year, d.month, d.day)
       end
 
       def date_range
