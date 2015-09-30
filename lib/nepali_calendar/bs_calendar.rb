@@ -99,19 +99,17 @@ module NepaliCalendar
         wday = option[:wday]
 
         while days != 0
-          bs_month_days = NepaliCalendar::BS[year][month - 1]
           day -= 1
           wday -= 1
           wday = 7 if wday < 1
 
           if day < 1
             month -= 1
-            day = bs_month_days
-          end
-
-          if month < 1
-            year -= 1
-            month = 12
+            if month < 1
+              year -= 1
+              month = 12
+            end
+            day = NepaliCalendar::BS[year][month]
           end
 
           days += 1

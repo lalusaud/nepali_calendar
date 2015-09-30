@@ -25,31 +25,30 @@ describe NepaliCalendar do
   end
 
   context '#BsCalendar' do
-    # it 'converts date from ad_to_bs' do
-    #   expect(bs_date.year).to eq(2072)
-    #   expect(bs_date.month).to eq(5)
-    #   expect(bs_date.day).to eq(23)
-    #   expect(bs_date.wday).to eq(4)
-    #   expect(bs_date.month_name).to eq('Bhadra')
-    #   expect(bs_date.wday_name).to eq('Budhbar')
-    # end
-    #
-    # it 'returns todays date' do
-    #   d = Date.today
-    #   bs_today = NepaliCalendar::BsCalendar.ad_to_bs(d.year, d.month, d.day)
-    #   expect(bs_today.to_s).to eq(NepaliCalendar::BsCalendar.today.to_s)
-    # end
+    it 'converts date from ad_to_bs' do
+      expect(bs_date.year).to eq(2072)
+      expect(bs_date.month).to eq(5)
+      expect(bs_date.day).to eq(23)
+      expect(bs_date.wday).to eq(4)
+      expect(bs_date.month_name).to eq('Bhadra')
+      expect(bs_date.wday_name).to eq('Budhbar')
+    end
+
+    it 'returns todays date' do
+      d = Date.today
+      bs_today = NepaliCalendar::BsCalendar.ad_to_bs(d.year, d.month, d.day)
+      expect(bs_today.to_s).to eq(NepaliCalendar::BsCalendar.today.to_s)
+    end
 
     it 'returns beginning of week' do
-      # wday <= 1
       d1 = NepaliCalendar::BsCalendar.ad_to_bs(2015, 9, 20).beginning_of_week
-      # wday > 1 && day < wday
       d2 = NepaliCalendar::BsCalendar.ad_to_bs(2015, 9, 19).beginning_of_week
-      # wday > 1 && day > wday
       d3 = NepaliCalendar::BsCalendar.ad_to_bs(2015, 10, 2).beginning_of_week
+      d4 = NepaliCalendar::BsCalendar.ad_to_bs(2015, 4, 15).beginning_of_week
       expect(d1.to_s).to eq('Aitabar, 3 Ashwin, 2072')
       expect(d2.to_s).to eq('Aitabar, 27 Bhadra, 2072')
       expect(d3.to_s).to eq('Aitabar, 10 Ashwin, 2072')
+      expect(d4.to_s).to eq('Aitabar, 29 Chaitra, 2071')
     end
 
     it 'returns end of week' do
