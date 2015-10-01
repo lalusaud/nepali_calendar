@@ -15,28 +15,26 @@
   <%= link_to '&laquo; Previous'.html_safe, start_date: travel(-1, date_range[0]) %>
   <%= "#{start_date.month_name}, #{start_date.year}" %>
   <%= link_to 'Next &raquo;'.html_safe, start_date: travel(1, date_range[1]) %>
+
   <table class="table table-stripped">
     <thead>
       <tr>
         <% NepaliCalendar::BsCalendar::DAYNAMES[1..7].each do |day| %>
-          <th><%= day %></th>
+          <%= content_tag :th, day %>
         <% end %>
       </tr>
     </thead>
 
     <tbody>
-      <%
-        date_object.each_slice(7) do |week|
-      %><tr><%
-        week.each do |day|
-      %>
-          <td>
-            <% block.call day %>
-          </td>
-      <%
-          end
-        end
-      %>
+      <% date_object.each_slice(7) do |week| %>
+        <tr>
+          <% week.each do |day| %>
+            <%= content_tag :td do %>
+              <%= block.call day %>
+            <% end %>
+          <% end %>
+        </tr>
+      <% end %>
     </tbody>
   </table>
 </div>
