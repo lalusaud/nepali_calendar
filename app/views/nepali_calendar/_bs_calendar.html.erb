@@ -18,13 +18,9 @@
   <table class="table table-stripped">
     <thead>
       <tr>
-        <th>Aitabar</th>
-        <th>Sombar</th>
-        <th>Mangalbar</th>
-        <th>Budhbar</th>
-        <th>Bihibar</th>
-        <th>Sukrabar</th>
-        <th>Sanibar</th>
+        <% NepaliCalendar::BsCalendar::DAYNAMES[1..7].each do |day| %>
+          <th><%= day %></th>
+        <% end %>
       </tr>
     </thead>
 
@@ -35,7 +31,7 @@
         week.each do |day|
       %>
           <td>
-            <%= day.day %>
+            <% block.call day %>
           </td>
       <%
           end
