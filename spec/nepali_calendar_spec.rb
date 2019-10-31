@@ -1,9 +1,12 @@
 require 'spec_helper'
 
+
 describe NepaliCalendar do
   let(:today) {Date.today}
   let(:bs_date) { NepaliCalendar::BsCalendar.ad_to_bs('2015', '09', '09') }
   let(:ad_date) { NepaliCalendar::AdCalendar.bs_to_ad('2072', '05', '23') }
+
+  let(:invalid_ad_date) { NepaliCalendar::AdCalendar.bs_to_ad('2072', '10', '30') }
 
   it 'has a version number' do
     expect(NepaliCalendar::VERSION).not_to be nil
@@ -72,6 +75,10 @@ describe NepaliCalendar do
   end
 
   context '#AdCalendar' do
+    it 'checks validity of bs date' do
+      expect { invalid_ad_date }.to raise_error('Invalid BS date!')
+    end
+
     it 'converts date from bs_to_ad' do
       expect(ad_date.year).to eq(2015)
       expect(ad_date.month).to eq(9)

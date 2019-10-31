@@ -6,7 +6,7 @@ module NepaliCalendar
 
     class << self
       def ad_to_bs(year, month, day)
-        fail 'Invalid AD date!' unless valid_date?(year, month, day)
+        raise 'Invalid AD date!' unless valid_date?(year, month, day)
 
         ref_day_eng = get_ref_day_eng
         date_ad = Date.parse("#{year}/#{month}/#{day}")

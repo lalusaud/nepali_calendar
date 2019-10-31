@@ -10,6 +10,8 @@ module NepaliCalendar
       end
 
       def get_ad_date(year, month, day, ref_day_nep)
+        raise 'Invalid BS date!' unless valid_bs_date?(year, month, day)
+
         ref_year, ref_month, ref_day = ref_day_nep.split('/').map(&:to_i)
         k = ref_year
 

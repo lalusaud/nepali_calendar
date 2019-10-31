@@ -59,6 +59,10 @@ module NepaliCalendar
         Date.valid_date?(year.to_i, month.to_i, day.to_i)
       end
 
+      def self.valid_bs_date?(year, month, day)
+        day.to_i <= NepaliCalendar::BS[year.to_i][month.to_i] && day.to_i > 0
+      end
+
       def self.format_initial(date)
         (date < 10) ? "0#{date}" : date
       end
