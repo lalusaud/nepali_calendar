@@ -76,7 +76,7 @@ describe NepaliCalendar do
 
   context '#AdCalendar' do
     it 'checks validity of bs date' do
-      expect { invalid_ad_date }.to raise_error('Invalid BS date!')
+      expect { invalid_ad_date }.to raise_error('Invalid BS Date!')
     end
 
     it 'converts date from bs_to_ad' do

@@ -1,3 +1,4 @@
+require 'exceptions/exceptions'
 module NepaliCalendar
   class BsCalendar < NepaliCalendar::Calendar
 
@@ -5,8 +6,9 @@ module NepaliCalendar
     DAYNAMES = %w{nil Aitabar Sombar Mangalbar Budhbar Bihibar Sukrabar Sanibar}
 
     class << self
+      InvalidADDateException = Exception.new("Invalid AD Date!")
       def ad_to_bs(year, month, day)
-        raise 'Invalid AD date!' unless valid_date?(year, month, day)
+        raise InvalidADDateException unless valid_date?(year, month, day)
 
         ref_day_eng = get_ref_day_eng
         date_ad = Date.parse("#{year}/#{month}/#{day}")

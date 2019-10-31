@@ -1,7 +1,9 @@
+require 'exceptions/exceptions'
 module NepaliCalendar
   class AdCalendar < NepaliCalendar::Calendar
 
     class << self
+      InvalidBSDateException = Exception.new("Invalid BS Date!")
       def bs_to_ad(year, month, day)
         ref_day_nep = ref_date['bs_to_ad']['bs']
         date_bs = "#{year}/#{month}/#{day}"
@@ -10,7 +12,7 @@ module NepaliCalendar
       end
 
       def get_ad_date(year, month, day, ref_day_nep)
-        raise 'Invalid BS date!' unless valid_bs_date?(year, month, day)
+        raise InvalidBSDateException unless valid_bs_date?(year, month, day)
 
         ref_year, ref_month, ref_day = ref_day_nep.split('/').map(&:to_i)
         k = ref_year
