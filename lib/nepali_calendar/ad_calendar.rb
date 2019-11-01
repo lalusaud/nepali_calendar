@@ -4,15 +4,20 @@ module NepaliCalendar
 
     class << self
       InvalidBSDateException = Exception.new("Invalid BS Date!")
+      NilDateFields = Exception.new("Date fields can't be empty!")
+
       def bs_to_ad(year, month, day)
+        raise NilDateFields unless valid_date_input?(year, month, day)
+        raise InvalidBSDateException unless valid_bs_date?(year, month, day)
+
         ref_day_nep = ref_date['bs_to_ad']['bs']
         date_bs = "#{year}/#{month}/#{day}"
         return unless date_in_range?(date_bs, ref_day_nep)
+
         get_ad_date(year, month, day, ref_day_nep)
       end
 
       def get_ad_date(year, month, day, ref_day_nep)
-        raise InvalidBSDateException unless valid_bs_date?(year, month, day)
 
         ref_year, ref_month, ref_day = ref_day_nep.split('/').map(&:to_i)
         k = ref_year

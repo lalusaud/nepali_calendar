@@ -7,8 +7,10 @@ module NepaliCalendar
 
     class << self
       InvalidADDateException = Exception.new("Invalid AD Date!")
+      NilDateFields = Exception.new("Date fields can't be empty!")
       def ad_to_bs(year, month, day)
-        raise InvalidADDateException unless valid_date?(year, month, day)
+        raise NilDateFields unless valid_date_input?(year, month, day)
+        raise InvalidADDateException unless valid_ad_date?(year, month, day)
 
         ref_day_eng = get_ref_day_eng
         date_ad = Date.parse("#{year}/#{month}/#{day}")
@@ -19,6 +21,7 @@ module NepaliCalendar
       end
 
       def get_bs_date(days, ref_day_nep)
+
         wday = 7
         year, month, day = ref_day_nep.split('/').map(&:to_i)
         travel days, year: year, month: month, day: day, wday: wday

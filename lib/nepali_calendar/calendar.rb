@@ -50,18 +50,23 @@ module NepaliCalendar
         days.to_i
       end
 
+      def self.valid_date_input?(year, month, day)
+        [year.to_i,month.to_i,day.to_i].any? { |item| item > 0 }
+      end
+
       def self.date_in_range?(date, reference_date)
-        date > reference_date
+        date > reference_date && date.to_s < '2091/01/01'
         # TODO: Check for both BS & AD (Upper and Lower limit)
       end
 
-      def self.valid_date?(year, month, day)
+      def self.valid_ad_date?(year, month, day)
         Date.valid_date?(year.to_i, month.to_i, day.to_i)
       end
 
       def self.valid_bs_date?(year, month, day)
-        day.to_i <= NepaliCalendar::BS[year.to_i][month.to_i] && day.to_i > 0
+        day.to_i <= NepaliCalendar::BS[year.to_i][month.to_i]
       end
+
 
       def self.format_initial(date)
         (date < 10) ? "0#{date}" : date

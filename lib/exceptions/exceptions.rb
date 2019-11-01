@@ -8,7 +8,7 @@ module NepaliCalendar
     # Public: get an object an error is instantiated with
     attr_reader :object
 
-    # Public: initialize a Mailgun:Error object
+    # Public: initialize a NepaliCalendar:Error object
     #
     # message - a String describing the error
     # object  - an object with details about the error
@@ -19,15 +19,15 @@ module NepaliCalendar
   end
 
   # Public: Class for managing parameter errors, with a pretty name.
-  # Inherits from Mailgun::Error
+  # Inherits from NepaliCalendar::Error
   class ParameterError < Error; end
 
   # Public: Class for managing parsing errors, with a pretty name.
-  # Inherits from Mailgun::Error
+  # Inherits from NepaliCalendar::Error
   class ParseError < Error; end
 
   # Public: Class for managing communications (eg http) response errors
-  # Inherits from Mailgun::Error
+  # Inherits from NepaliCalendar::Error
   class CommunicationError < Error
     # Public: gets HTTP status code
     attr_reader :code
