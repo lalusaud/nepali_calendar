@@ -6,6 +6,15 @@ describe NepaliCalendar do
   let(:bs_date) { NepaliCalendar::BsCalendar.ad_to_bs('2015', '09', '09') }
   let(:ad_date) { NepaliCalendar::AdCalendar.bs_to_ad('2072', '05', '23') }
 
+  it 'counts nepali days' do
+    expect(NepaliCalendar::Calendar.total_days_for_bs('2000/03/13','2000/01/01')).to eq(74)
+  end
+
+  it 'counts english days' do
+    expect(NepaliCalendar::Calendar.total_days(Date.parse('1944/02/13'),Date.parse('1944/01/01'))).to eq(43)
+
+  end
+
   it 'has a version number' do
     expect(NepaliCalendar::VERSION).not_to be nil
   end
@@ -18,24 +27,24 @@ describe NepaliCalendar do
   it 'AD date does not respond to date_in_range? and valid_date?' do
     expect(ad_date).to_not respond_to(:date_in_range?)
     expect(ad_date).to_not respond_to(:valid_date?)
-  end
+    end
 
-  it 'BS date does not respond to date_in_range? and valid_date?' do
-    expect(bs_date).to_not respond_to(:date_in_range?)
-    expect(bs_date).to_not respond_to(:valid_date?)
-  end
+    it 'BS date does not respond to date_in_range? and valid_date?' do
+      expect(bs_date).to_not respond_to(:date_in_range?)
+      expect(bs_date).to_not respond_to(:valid_date?)
+    end
 
-  it 'AD date does not respond to date_in_range? and valid_date?' do
-    expect(ad_date).to_not respond_to(:date_in_range?)
-    expect(ad_date).to_not respond_to(:valid_date?)
-  end
+    it 'AD date does not respond to date_in_range? and valid_date?' do
+      expect(ad_date).to_not respond_to(:date_in_range?)
+      expect(ad_date).to_not respond_to(:valid_date?)
+    end
 
-  it 'responds to get_ad_date & get_bs_date' do
-    expect(NepaliCalendar::AdCalendar).to respond_to(:get_ad_date)
-    expect(NepaliCalendar::BsCalendar).to respond_to(:get_bs_date)
-  end
+    it 'responds to get_ad_date & get_bs_date' do
+      expect(NepaliCalendar::AdCalendar).to respond_to(:get_ad_date)
+      expect(NepaliCalendar::BsCalendar).to respond_to(:get_bs_date)
+    end
 
-  context '#BsCalendar' do
+    context '#BsCalendar' do
 
     let(:bs_date_from_invalid_ad_date) { NepaliCalendar::BsCalendar.ad_to_bs('2072', '2', '30') }
     let(:bs_date_from_nil_ad_date) { NepaliCalendar::BsCalendar.ad_to_bs('', '', '') }
@@ -88,6 +97,11 @@ describe NepaliCalendar do
       d1 = NepaliCalendar::BsCalendar.ad_to_bs(2015, 10, 20).end_of_month
       expect(d1.to_s).to eq('Sombar, 30 Kartik, 2072')
     end
+
+    it 'returns Calendar class object' do
+      d1 = NepaliCalendar::BsCalendar.ad_to_bs(2015, 10, 20).end_of_month
+      expect(d1.class).to eq(NepaliCalendar::BsCalendar)
+    end
   end
 
   context '#AdCalendar' do
@@ -107,6 +121,43 @@ describe NepaliCalendar do
       expect(ad_date.wday).to eq(3)
       expect(ad_date.month_name).to eq('September')
       expect(ad_date.wday_name).to eq('Wednesday')
+    end
+
+
+    it 'returns todays date' do
+      d = Date.today
+      bs_today = NepaliCalendar::AdCalendar.bs_to_ad(d.year, d.month, d.day)
+      expect(bs_today.to_s).to eq(NepaliCalendar::AdCalendar.today.to_s)
+    end
+
+    it 'returns beginning of week' do
+      d1 = NepaliCalendar::AdCalendar.bs_to_ad(2076, 7, 15).beginning_of_week
+      d2 = NepaliCalendar::AdCalendar.bs_to_ad(2076, 9, 19).beginning_of_week
+      d3 = NepaliCalendar::AdCalendar.bs_to_ad(2076, 10, 2).beginning_of_week
+      d4 = NepaliCalendar::AdCalendar.bs_to_ad(2076, 4, 15).beginning_of_week
+      expect(d1.to_s).to eq('Monday, 28 October, 2019')
+      expect(d2.to_s).to eq('Monday, 30 December, 2019')
+      expect(d3.to_s).to eq('Monday, 13 January, 2020')
+      expect(d4.to_s).to eq('Monday, 29 July, 2019')
+    end
+
+    it 'returns end of week' do
+      d1 = NepaliCalendar::AdCalendar.bs_to_ad(2076, 7, 15).beginning_of_week
+      d2 = NepaliCalendar::AdCalendar.bs_to_ad(2076, 9, 19).beginning_of_week
+      d3 = NepaliCalendar::AdCalendar.bs_to_ad(2076, 10, 2).beginning_of_week
+      expect(d1.to_s).to eq('Sunday, 3 November, 2019')
+      expect(d2.to_s).to eq('Sunday, 5 January, 2020')
+      expect(d3.to_s).to eq('Sunday, 19 January, 2020')
+    end
+
+    it 'returns beginning of month' do
+      d1 = NepaliCalendar::AdCalendar.bs_to_ad(2076, 7, 15).beginning_of_week
+      expect(d1.to_s).to eq('Friday, 1 November, 2019')
+    end
+
+    it 'returns end of month' do
+      d1 = NepaliCalendar::AdCalendar.bs_to_ad(2076, 7, 15).beginning_of_week
+      expect(d1.to_s).to eq('Saturday, 30 November, 2019')
     end
 
   end
