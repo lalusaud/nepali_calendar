@@ -1,10 +1,16 @@
 require 'rails'
 require 'byebug'
+require 'exceptions/exceptions'
+
 module NepaliCalendar
   class Calendar
 
     attr_accessor :view_context, :options, :year, :month,
                   :day, :wday, :month_name, :wday_name
+
+    InvalidADDateException = Exception.new("Invalid AD Date!")
+    InvalidBSDateException = Exception.new("Invalid BS Date!")
+    NilDateFieldsException = Exception.new("Date fields can't be empty!")
 
     def initialize(view_context, options={})
       @view_context = view_context
@@ -71,7 +77,7 @@ module NepaliCalendar
         end
         days
       end
-    
+
     def self.valid_date_input?(year, month, day)
         [year.to_i,month.to_i,day.to_i].any? { |item| item > 0 }
       end
