@@ -1,10 +1,16 @@
 require 'rails'
+require 'byebug'
+require 'exceptions/exceptions'
 
 module NepaliCalendar
   class Calendar
 
     attr_accessor :view_context, :options, :year, :month,
                   :day, :wday, :month_name, :wday_name
+
+    InvalidADDateException = Exception.new("Invalid AD Date!")
+    InvalidBSDateException = Exception.new("Invalid BS Date!")
+    NilDateFieldsException = Exception.new("Date fields can't be empty!")
 
     def initialize(view_context, options={})
       @view_context = view_context
@@ -35,6 +41,7 @@ module NepaliCalendar
     alias_method :inspect, :readable_inspect
     alias_method :to_s, :readable_inspect
 
+
     private
 
       def date_range
@@ -50,7 +57,28 @@ module NepaliCalendar
         days.to_i
       end
 
-      def self.valid_date_input?(year, month, day)
+      def self.total_days_for_bs(date_nep, reference_date)
+        ref_year, ref_month, ref_day = reference_date.split('/').map(&:to_i)
+        nep_year, nep_month, nep_day = date_nep.split('/').map(&:to_i)
+        temp_day = nep_day
+        days = 0
+        while nep_year >= ref_year && nep_month >= ref_month && ref_day!=nep_day
+          days += temp_day
+          nep_month -= 1
+          if nep_month < 1
+            nep_year -= 1
+            if nep_year == ref_year - 1
+              break
+            end
+            nep_month = 12
+          end
+          temp_day = nep_year == ref_year && nep_month == ref_month ? NepaliCalendar::BS[nep_year][nep_month].to_i - 1 : NepaliCalendar::BS[nep_year][nep_month].to_i
+
+        end
+        days
+      end
+
+    def self.valid_date_input?(year, month, day)
         [year.to_i,month.to_i,day.to_i].any? { |item| item > 0 }
       end
 

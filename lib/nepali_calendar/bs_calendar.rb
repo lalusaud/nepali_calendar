@@ -1,16 +1,13 @@
-require 'exceptions/exceptions'
 module NepaliCalendar
   class BsCalendar < NepaliCalendar::Calendar
 
     MONTHNAMES = %w{nil Baisakh Jestha Ashad Shrawn Bhadra Ashwin Kartik Mangshir Poush Magh Falgun Chaitra}
     DAYNAMES = %w{nil Aitabar Sombar Mangalbar Budhbar Bihibar Sukrabar Sanibar}
-
     class << self
-      InvalidADDateException = Exception.new("Invalid AD Date!")
-      NilDateFields = Exception.new("Date fields can't be empty!")
+
       def ad_to_bs(year, month, day)
-        raise NilDateFields unless valid_date_input?(year, month, day)
-        raise InvalidADDateException unless valid_ad_date?(year, month, day)
+        raise NepaliCalendar::Calendar::NilDateFieldsException unless valid_date_input?(year, month, day)
+        raise NepaliCalendar::Calendar::InvalidADDateException unless valid_ad_date?(year, month, day)
 
         ref_day_eng = get_ref_day_eng
         date_ad = Date.parse("#{year}/#{month}/#{day}")
