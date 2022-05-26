@@ -9,12 +9,12 @@ module NepaliCalendar
         raise NepaliCalendar::Calendar::NilDateFieldsException unless valid_date_input?(year, month, day)
         raise NepaliCalendar::Calendar::InvalidADDateException unless valid_ad_date?(year, month, day)
 
-        ref_day_eng = get_ref_day_eng
+        ref_day_eng = get_ref_day_eng # 1994/1/1
         date_ad = Date.parse("#{year}/#{month}/#{day}")
         return unless date_in_range?(date_ad, ref_day_eng)
 
         days = total_days(date_ad, ref_day_eng)
-        get_bs_date(days, ref_date['ad_to_bs']['bs'])
+        get_bs_date(days, ref_date['ad_to_bs']['bs']) # days = 10372 when '2022-05-26', ref_date = '2009/9/17'
       end
 
       def get_bs_date(days, ref_day_nep)

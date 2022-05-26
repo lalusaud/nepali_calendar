@@ -57,12 +57,12 @@ module NepaliCalendar
         days.to_i
       end
 
-      def self.total_days_for_bs(date_nep, reference_date)
+      def self.total_days_for_bs(date_nep, reference_date) # ref = '2000/1/1'
         ref_year, ref_month, ref_day = reference_date.split('/').map(&:to_i)
         nep_year, nep_month, nep_day = date_nep.split('/').map(&:to_i)
         temp_day = nep_day
         days = 0
-        while nep_year >= ref_year && nep_month >= ref_month && ref_day!=nep_day
+        while nep_year >= ref_year && nep_month >= ref_month
           days += temp_day
           nep_month -= 1
           if nep_month < 1
@@ -72,7 +72,16 @@ module NepaliCalendar
             end
             nep_month = 12
           end
-          temp_day = nep_year == ref_year && nep_month == ref_month ? NepaliCalendar::BS[nep_year][nep_month].to_i - 1 : NepaliCalendar::BS[nep_year][nep_month].to_i
+
+          temp_day = begin
+            if nep_year == ref_year && nep_month == ref_month
+              # we need to accomodate for that fact that ref date '2000/1/1' so day begins at '1' not '0'
+              # thats why we need to subtract 1 when we successfully time travel to that date
+              NepaliCalendar::BS[nep_year][nep_month].to_i - 1
+            else
+              NepaliCalendar::BS[nep_year][nep_month].to_i
+            end
+          end
 
         end
         days

@@ -115,13 +115,14 @@ describe NepaliCalendar do
 
     end
 
+    let(:ad_date) { NepaliCalendar::AdCalendar.bs_to_ad('2072', '04', '01') }
     it 'converts date from bs_to_ad' do
       expect(ad_date.year).to eq(2015)
-      expect(ad_date.month).to eq(9)
-      expect(ad_date.day).to eq(9)
-      expect(ad_date.wday).to eq(3)
-      expect(ad_date.month_name).to eq('September')
-      expect(ad_date.wday_name).to eq('Wednesday')
+      expect(ad_date.month).to eq(7)
+      expect(ad_date.day).to eq(17)
+      expect(ad_date.wday).to eq(5)
+      expect(ad_date.month_name).to eq('July')
+      expect(ad_date.wday_name).to eq('Friday')
     end
 
 
