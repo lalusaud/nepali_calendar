@@ -11,7 +11,7 @@ module NepaliCalendar
         ref_day_nep = get_ref_day_nep
         date_bs = "#{year}/#{month}/#{day}"
         return unless date_in_range?(date_bs, ref_day_nep)
-        days = total_days_for_bs(date_bs, ref_day_nep)
+        days = total_days_for_bs(date_bs, ref_day_nep) # ref = '2000/01/01'
         get_ad_date(days, ref_date['bs_to_ad']['ad'])
       end
 
