@@ -19,6 +19,17 @@ describe NepaliCalendar do
     expect(NepaliCalendar::VERSION).not_to be nil
   end
 
+  it 'works well with original implementation' do
+    range = (Date.today - 10.years)..Date.today
+    range.to_a.each do |ad_date|
+      ad_to_bs = NepaliCalendar::BsCalendar.ad_to_bs(ad_date.year, ad_date.month, ad_date.day)
+      new = NepaliCalendar::AdCalendar.bs_to_ad(ad_to_bs.year, ad_to_bs.month, ad_to_bs.day)
+      original = NepaliCalendar::AdCalendar.bs_to_ad_original(ad_to_bs.year, ad_to_bs.month, ad_to_bs.day)
+      puts "#{new} vs #{original}"
+      debugger if new != original
+    end
+  end
+
   it 'BS date does not respond to total_days & ref_date' do
     expect(bs_date).to_not respond_to(:total_days)
     expect(bs_date).to_not respond_to(:ref_date)
@@ -115,13 +126,14 @@ describe NepaliCalendar do
 
     end
 
+    let(:ad_date) { NepaliCalendar::AdCalendar.bs_to_ad('2072', '04', '01') }
     it 'converts date from bs_to_ad' do
       expect(ad_date.year).to eq(2015)
-      expect(ad_date.month).to eq(9)
-      expect(ad_date.day).to eq(9)
-      expect(ad_date.wday).to eq(3)
-      expect(ad_date.month_name).to eq('September')
-      expect(ad_date.wday_name).to eq('Wednesday')
+      expect(ad_date.month).to eq(7)
+      expect(ad_date.day).to eq(17)
+      expect(ad_date.wday).to eq(5)
+      expect(ad_date.month_name).to eq('July')
+      expect(ad_date.wday_name).to eq('Friday')
     end
 
 
