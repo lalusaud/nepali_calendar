@@ -19,19 +19,6 @@ describe NepaliCalendar do
     expect(NepaliCalendar::VERSION).not_to be nil
   end
 
-  it 'works well with original implementation' do
-    range = (Date.today - 75.years)..Date.today
-    range.to_a.each do |ad_date|
-      ad_to_bs = NepaliCalendar::BsCalendar.ad_to_bs(ad_date.year, ad_date.month, ad_date.day)
-      new = NepaliCalendar::AdCalendar.bs_to_ad(ad_to_bs.year, ad_to_bs.month, ad_to_bs.day)
-      original = NepaliCalendar::AdCalendar.bs_to_ad_original(ad_to_bs.year, ad_to_bs.month, ad_to_bs.day)
-
-      expect(new.year).to eq(original.year)
-      expect(new.month).to eq(original.month)
-      expect(new.day).to eq(original.day)
-    end
-  end
-
   it 'BS date does not respond to total_days & ref_date' do
     expect(bs_date).to_not respond_to(:total_days)
     expect(bs_date).to_not respond_to(:ref_date)
