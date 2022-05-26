@@ -62,8 +62,8 @@ module NepaliCalendar
         nep_year, nep_month, nep_day = date_nep.split('/').map(&:to_i)
         temp_day = nep_day
         days = 0
-        nep_year = 2078
-        nep_month = 1
+        # nep_year = 2078
+        # nep_month = 1
         # 2000/01/01'
         while nep_year >= ref_year && nep_month >= ref_month
           days += temp_day
