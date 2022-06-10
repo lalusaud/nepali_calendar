@@ -51,6 +51,8 @@ module NepaliCalendar
       formatted_date.end_of_month
     end
 
+
+
       private
 
         def self.travel(days)

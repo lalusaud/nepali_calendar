@@ -54,6 +54,10 @@ module NepaliCalendar
       NepaliCalendar::BsCalendar.travel days, date
     end
 
+
+
+
+
     private
 
       def self.travel days, option = {}
@@ -136,6 +140,7 @@ module NepaliCalendar
         date.blank? ? NepaliCalendar::BsCalendar.today : to_bs_date(date)
       end
 
+      # date = "2079-01-01"
       def to_bs_date(date)
         d = date.split('-').map(&:to_i)
         d = NepaliCalendar::AdCalendar.bs_to_ad(d[0], d[1], d[2])
@@ -148,5 +153,8 @@ module NepaliCalendar
           start_date.end_of_month.end_of_week
         ]
       end
+
+
+      
   end
 end
