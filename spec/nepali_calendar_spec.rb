@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 require 'date'
 
@@ -7,12 +9,11 @@ describe NepaliCalendar do
   let(:ad_date) { NepaliCalendar::AdCalendar.bs_to_ad('2072', '05', '23') }
 
   it 'counts nepali days' do
-    expect(NepaliCalendar::Calendar.total_days_for_bs('2000/03/13','2000/01/01')).to eq(74)
+    expect(NepaliCalendar::Calendar.total_days_for_bs('2000/03/13', '2000/01/01')).to eq(74)
   end
 
   it 'counts english days' do
-    expect(NepaliCalendar::Calendar.total_days(Date.parse('1944/02/13'),Date.parse('1944/01/01'))).to eq(43)
-
+    expect(NepaliCalendar::Calendar.total_days(Date.parse('1944/02/13'), Date.parse('1944/01/01'))).to eq(43)
   end
 
   it 'has a version number' do
@@ -27,32 +28,30 @@ describe NepaliCalendar do
   it 'AD date does not respond to date_in_range? and valid_date?' do
     expect(ad_date).to_not respond_to(:date_in_range?)
     expect(ad_date).to_not respond_to(:valid_date?)
-    end
+  end
 
-    it 'BS date does not respond to date_in_range? and valid_date?' do
-      expect(bs_date).to_not respond_to(:date_in_range?)
-      expect(bs_date).to_not respond_to(:valid_date?)
-    end
+  it 'BS date does not respond to date_in_range? and valid_date?' do
+    expect(bs_date).to_not respond_to(:date_in_range?)
+    expect(bs_date).to_not respond_to(:valid_date?)
+  end
 
-    it 'AD date does not respond to date_in_range? and valid_date?' do
-      expect(ad_date).to_not respond_to(:date_in_range?)
-      expect(ad_date).to_not respond_to(:valid_date?)
-    end
+  it 'AD date does not respond to date_in_range? and valid_date?' do
+    expect(ad_date).to_not respond_to(:date_in_range?)
+    expect(ad_date).to_not respond_to(:valid_date?)
+  end
 
-    it 'responds to get_ad_date & get_bs_date' do
-      expect(NepaliCalendar::AdCalendar).to respond_to(:get_ad_date)
-      expect(NepaliCalendar::BsCalendar).to respond_to(:get_bs_date)
-    end
+  it 'responds to get_ad_date & get_bs_date' do
+    expect(NepaliCalendar::AdCalendar).to respond_to(:get_ad_date)
+    expect(NepaliCalendar::BsCalendar).to respond_to(:get_bs_date)
+  end
 
-    context '#BsCalendar' do
-
+  context '#BsCalendar' do
     let(:bs_date_from_invalid_ad_date) { NepaliCalendar::BsCalendar.ad_to_bs('2072', '2', '30') }
     let(:bs_date_from_nil_ad_date) { NepaliCalendar::BsCalendar.ad_to_bs('', '', '') }
 
     it 'checks validity of ad date to be converted' do
       expect { bs_date_from_invalid_ad_date }.to raise_exception NepaliCalendar::Calendar::InvalidADDateException
       expect { bs_date_from_nil_ad_date }.to raise_exception NepaliCalendar::Calendar::NilDateFieldsException
-
     end
     it 'converts date from ad_to_bs' do
       expect(bs_date.year).to eq(2072)
@@ -112,7 +111,6 @@ describe NepaliCalendar do
     it 'checks validity of bs date to be converted' do
       expect { ad_date_from_invalid_bs_date }.to raise_exception(NepaliCalendar::Calendar::InvalidBSDateException)
       expect { ad_date_from_nil_bs_date }.to raise_exception(NepaliCalendar::Calendar::NilDateFieldsException)
-
     end
 
     let(:ad_date) { NepaliCalendar::AdCalendar.bs_to_ad('2072', '04', '01') }
@@ -124,7 +122,6 @@ describe NepaliCalendar do
       expect(ad_date.month_name).to eq('July')
       expect(ad_date.wday_name).to eq('Friday')
     end
-
 
     it 'returns todays date' do
       d = Date.today
@@ -161,43 +158,39 @@ describe NepaliCalendar do
       d1 = NepaliCalendar::AdCalendar.bs_to_ad(2076, 7, 15).end_of_month
       expect(d1).to eq(Date.parse('Sat, 30 Nov, 2019'))
     end
-
   end
 
   context '#FiscalYear' do
-
     it 'returns start of fiscal year date in BS' do
-      start_date = NepaliCalendar::FiscalYear.new(78,79).beginning_of_year
-      expect(start_date.year.to_s).to eq("2078")
-      expect(start_date.month.to_s).to eq("4")
-      expect(start_date.day.to_s).to eq("1")
+      start_date = NepaliCalendar::FiscalYear.new(78, 79).beginning_of_year
+      expect(start_date.year.to_s).to eq('2078')
+      expect(start_date.month.to_s).to eq('4')
+      expect(start_date.day.to_s).to eq('1')
     end
 
     it 'returns end of fiscal year date in BS' do
-      start_date = NepaliCalendar::FiscalYear.new(78,79).end_of_year
-      expect(start_date.year.to_s).to eq("2079")
-      expect(start_date.month.to_s).to eq("3")
-      expect(start_date.day.to_s).to eq("32")
+      start_date = NepaliCalendar::FiscalYear.new(78, 79).end_of_year
+      expect(start_date.year.to_s).to eq('2079')
+      expect(start_date.month.to_s).to eq('3')
+      expect(start_date.day.to_s).to eq('32')
     end
 
     it 'returns fiscal year date in BS' do
       fiscal_year = NepaliCalendar::FiscalYear.fiscal_year_for_bs_date(2077, 4, 1)
-      expect(fiscal_year.to_s).to eq("7778")
+      expect(fiscal_year.to_s).to eq('7778')
       fiscal_year = NepaliCalendar::FiscalYear.fiscal_year_for_bs_date(2077, 3, 29)
-      expect(fiscal_year.to_s).to eq("7677")
+      expect(fiscal_year.to_s).to eq('7677')
     end
 
     it 'returns fiscal year date in BS from AD date' do
       fiscal_year = NepaliCalendar::FiscalYear.fiscal_year_in_bs_for_ad_date(Date.new(2021, 3, 22))
-      expect(fiscal_year.to_s).to eq("7778")
+      expect(fiscal_year.to_s).to eq('7778')
     end
 
     it 'returns the current fiscal year represented as a string' do
       allow(Date).to receive(:today).and_return(Date.new(2022, 5, 26))
       fiscal_year = NepaliCalendar::FiscalYear.current_fiscal_year
-      expect(fiscal_year.to_s).to eq("7879")
+      expect(fiscal_year.to_s).to eq('7879')
     end
-
   end
-
 end
