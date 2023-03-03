@@ -185,6 +185,10 @@ describe NepaliCalendar do
     it 'returns fiscal year date in BS from AD date' do
       fiscal_year = NepaliCalendar::FiscalYear.fiscal_year_in_bs_for_ad_date(Date.new(2021, 3, 22))
       expect(fiscal_year.to_s).to eq('7778')
+
+      # edge case
+      fiscal_year = NepaliCalendar::FiscalYear.fiscal_year_in_bs_for_ad_date(Date.new(2022, 7, 16))
+      expect(fiscal_year.to_s).to eq('7879')
     end
 
     it 'returns the current fiscal year represented as a string' do
