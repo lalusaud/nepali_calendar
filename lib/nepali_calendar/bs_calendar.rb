@@ -146,5 +146,29 @@ module NepaliCalendar
         start_date.end_of_month.end_of_week
       ]
     end
+
+    def to_ad
+      if !year || !month || !day
+        raise NilDateFieldsException
+      end
+
+      if !NepaliCalendar::Calendar.valid_date_input?(year, month, day)
+        raise InvalidBSDateException
+      end
+
+      ad_date = NepaliCalendar::Calendar.ref_date['bs_to_ad']['ad']
+      bs_date = NepaliCalendar::Calendar.ref_date['bs_to_ad']['bs']
+
+      total_days = NepaliCalendar::Calendar.total_days_for_bs("#{year}/#{month}/#{day}", bs_date)
+      ad_date = Date.parse(ad_date) + total_days
+      {
+        year: ad_date.year,
+        month: ad_date.month,
+        day: ad_date.day,
+        wday: ad_date.wday,
+        month_name: I18n.t("date.month_names")[ad_date.month],
+        wday_name: I18n.t("date.day_names")[ad_date.wday],
+      }
+    end
   end
 end
