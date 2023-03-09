@@ -111,5 +111,9 @@ module NepaliCalendar
         start_date.end_of_month.end_of_week
       ]
     end
+
+    def to_date
+      Date.new(year, month, day)
+    end
   end
 end
