@@ -28,29 +28,30 @@ module NepaliCalendar
     end
 
     def beginning_of_week
-      date = { year: year, month: month, day: day, wday: wday, month_name: Date::MONTHNAMES[month],
-               wday_name: Date::DAYNAMES[wday] }
+      debugger
+      date = { year: year, month: month, day: day, wday: wday, month_name: Date::MONTHNAMES[month.to_i],
+               wday_name: Date::DAYNAMES[wday.to_i] }
       formatted_date = Date.parse(NepaliCalendar::Calendar.new('', date).to_s)
       formatted_date.beginning_of_week
     end
 
     def end_of_week
-      date = { year: year, month: month, day: day, wday: wday, month_name: Date::MONTHNAMES[month],
-               wday_name: Date::DAYNAMES[wday] }
+      date = { year: year, month: month, day: day, wday: wday, month_name: Date::MONTHNAMES[month.to_i],
+               wday_name: Date::DAYNAMES[wday.to_i] }
       formatted_date = Date.parse(NepaliCalendar::Calendar.new('', date).to_s)
       formatted_date.end_of_week
     end
 
     def beginning_of_month
-      date = { year: year, month: month, day: day, wday: wday, month_name: Date::MONTHNAMES[month],
-               wday_name: Date::DAYNAMES[wday] }
+      date = { year: year, month: month, day: day, wday: wday, month_name: Date::MONTHNAMES[month.to_i],
+               wday_name: Date::DAYNAMES[wday.to_i] }
       formatted_date = Date.parse(NepaliCalendar::Calendar.new('', date).to_s)
       formatted_date.beginning_of_month
     end
 
     def end_of_month
-      date = { year: year, month: month, day: day, wday: wday, month_name: Date::MONTHNAMES[month],
-               wday_name: Date::DAYNAMES[wday] }
+      date = { year: year, month: month, day: day, wday: wday, month_name: Date::MONTHNAMES[month.to_i],
+               wday_name: Date::DAYNAMES[wday.to_i] }
       formatted_date = Date.parse(NepaliCalendar::Calendar.new('', date).to_s)
       formatted_date.end_of_month
     end
@@ -70,7 +71,7 @@ module NepaliCalendar
       ad = Date.parse(ref_date['bs_to_ad']['ad']) + days
 
       option = { year: ad.year, month: ad.month, day: ad.day, wday: ad.wday,
-                 month_name: Date::MONTHNAMES[ad.month], wday_name: ad.strftime('%A') }
+                 month_name: Date::MONTHNAMES[ad.month.to_i], wday_name: ad.strftime('%A') }
       new('', option)
     end
 
@@ -110,6 +111,10 @@ module NepaliCalendar
         start_date.beginning_of_month.beginning_of_week,
         start_date.end_of_month.end_of_week
       ]
+    end
+
+    def to_date
+      Date.new(year, month, day)
     end
   end
 end
