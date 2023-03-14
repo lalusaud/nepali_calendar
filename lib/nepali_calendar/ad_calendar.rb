@@ -28,7 +28,6 @@ module NepaliCalendar
     end
 
     def beginning_of_week
-      debugger
       date = { year: year, month: month, day: day, wday: wday, month_name: Date::MONTHNAMES[month.to_i],
                wday_name: Date::DAYNAMES[wday.to_i] }
       formatted_date = Date.parse(NepaliCalendar::Calendar.new('', date).to_s)
