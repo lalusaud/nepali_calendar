@@ -158,6 +158,23 @@ describe NepaliCalendar do
       d1 = NepaliCalendar::AdCalendar.bs_to_ad(2076, 7, 15).end_of_month
       expect(d1).to eq(Date.parse('Sat, 30 Nov, 2019'))
     end
+
+    describe '.to_date' do
+      it 'returns a Date object for a valid Ad date' do
+        ad_calendar = NepaliCalendar::AdCalendar.new(nil, { year: 2033, month: 12, day:12 })
+        date = ad_calendar.to_date
+        expect(date).to be_a(Date)
+        expect(date.year).to eq(2033)
+        expect(date.month).to eq(12)
+        expect(date.day).to eq(12)
+      end
+
+      it 'raises an error for an invalid date string' do
+        expect { ad_date.to_date('2022-02-31') }.to raise_error(ArgumentError)
+        expect { ad_date.to_date('2022-13-01') }.to raise_error(ArgumentError)
+        expect { ad_date.to_date('2022-01-') }.to raise_error(ArgumentError)
+      end
+    end
   end
 
   context '#FiscalYear' do
