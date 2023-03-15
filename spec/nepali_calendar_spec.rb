@@ -102,6 +102,15 @@ describe NepaliCalendar do
       d1 = NepaliCalendar::BsCalendar.ad_to_bs(2015, 10, 20).end_of_month
       expect(d1.class).to eq(NepaliCalendar::BsCalendar)
     end
+
+    describe '#to_ad' do
+      let(:expected_date) { { year: 2023, month: 3, day: 7, wday: 2, month_name: "March", wday_name: "Tuesday" } }
+      let(:bs_calendar) { NepaliCalendar::BsCalendar.new(nil, { year: 2079, month: 11, day: 23 }) }
+
+      it 'converts the date from the BS to the AD date' do
+        expect(bs_calendar.to_ad).to eq(expected_date)
+      end
+    end
   end
 
   context '#AdCalendar' do
@@ -159,7 +168,7 @@ describe NepaliCalendar do
       expect(d1).to eq(Date.parse('Sat, 30 Nov, 2019'))
     end
 
-    describe '.to_date' do
+    describe '#to_date' do
       it 'returns a Date object for a valid Ad date' do
         ad_calendar = NepaliCalendar::AdCalendar.new(nil, { year: 2033, month: 12, day:12 })
         date = ad_calendar.to_date
