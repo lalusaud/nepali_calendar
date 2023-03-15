@@ -161,8 +161,8 @@ describe NepaliCalendar do
 
     describe '.to_date' do
       it 'returns a Date object for a valid Ad date' do
-        ad_date = NepaliCalendar::AdCalendar.new(nil, { year: 2033, month: 12, day:12 })
-        date = ad_date.to_date
+        ad_calendar = NepaliCalendar::AdCalendar.new(nil, { year: 2033, month: 12, day:12 })
+        date = ad_calendar.to_date
         expect(date).to be_a(Date)
         expect(date.year).to eq(2033)
         expect(date.month).to eq(12)
