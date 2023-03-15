@@ -160,13 +160,13 @@ describe NepaliCalendar do
     end
 
     describe '.to_date' do
-      it 'returns a Date object for a valid date string' do
-        date_string = '2022-03-09'
-        date = date_string.to_date
+      it 'returns a Date object for a valid Ad date' do
+        ad_date = NepaliCalendar::AdCalendar.new(nil, { year: 2033, month: 12, day:12 })
+        date = ad_date.to_date
         expect(date).to be_a(Date)
-        expect(date.year).to eq(2022)
-        expect(date.month).to eq(3)
-        expect(date.day).to eq(9)
+        expect(date.year).to eq(2033)
+        expect(date.month).to eq(12)
+        expect(date.day).to eq(12)
       end
 
       it 'raises an error for an invalid date string' do
