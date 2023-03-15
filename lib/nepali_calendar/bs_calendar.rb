@@ -32,7 +32,7 @@ module NepaliCalendar
 
     def date
       # Convert nepali date to Ad date
-      date = NepaliCalendar::BsCalendar.new(nil, {year: @year, month: @month, day: @day}).to_ad
+      date = self.to_ad
 
       # Create new date object with the Ad date
       date_object = Date.new(date[:year], date[:month], date[:day])
