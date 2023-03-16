@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module NepaliCalendar
   BS = {}
   File.open(File.dirname(__FILE__) + '/bs.txt') do |f|
