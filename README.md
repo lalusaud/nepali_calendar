@@ -22,19 +22,17 @@ Or install it yourself as:
 
 ## Usage
 
-##### Rails 3/4
-Initialize Calendar Object in controller with:
-```sh
-@cal = NepaliCalendar::Calendar.new
 ```
-To convert date from AD to BS, copy the following code in the view file:
+To convert date from AD to BS, try the following code in console:
 ```sh
-<%= @cal.ad_to_bs('2015', '09', '10') %>
+NepaliCalendar::BsCalendar.ad_to_bs('2015', '09', '10')
+=> Bihibar, 24 Bhadra, 2072 
 ```
 
-To convert date from BS to AD, copy the following code:
+To convert date from BS to AD:
 ```sh
-<%= @cal.bs_to_ad('2072', '05', '24') %>
+NepaliCalendar::AdCalendar.bs_to_ad('2072', '05', '24')
+=> Thursday, 10 September, 2015
 ```
 
 ## Contributing
