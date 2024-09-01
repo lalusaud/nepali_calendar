@@ -22,14 +22,15 @@ Or install it yourself as:
 
 ## Usage
 
-```
 To convert date from AD to BS, try the following code in console:
+
 ```sh
 NepaliCalendar::BsCalendar.ad_to_bs('2015', '09', '10')
 => Bihibar, 24 Bhadra, 2072 
 ```
 
 To convert date from BS to AD:
+
 ```sh
 NepaliCalendar::AdCalendar.bs_to_ad('2072', '05', '24')
 => Thursday, 10 September, 2015
