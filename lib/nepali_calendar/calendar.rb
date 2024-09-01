@@ -27,15 +27,22 @@ module NepaliCalendar
       )
     end
 
+    def to_s
+      "#{year}-#{two_digits(month)}-#{two_digits(day)}"
+    end
+
     # Overrides the default inspect method with a human readable one, e.g., "Sombar, 21 Magh 2072"
     def readable_inspect
       "#{wday_name}, #{day} #{month_name}, #{year}"
     end
     alias_method :default_inspect, :inspect
     alias_method :inspect, :readable_inspect
-    alias_method :to_s, :readable_inspect
 
     private
+
+      def two_digits(number)
+        number.to_s.chars.unshift('0')[-2..-1].join
+      end
 
       def date_range
         (start_date.beginning_of_month.beginning_of_week..(start_date.end_of_month.end_of_week))
