@@ -77,7 +77,7 @@ ad_cal.to_s
 
 ```sh
 ad_cal.to_s.to_date
-=> Thursday,  10  September,  2015
+=> Thu, 10 Sep 2015
 ```
 
 ## Contributing
