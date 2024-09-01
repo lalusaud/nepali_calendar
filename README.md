@@ -73,7 +73,7 @@ ad_cal.to_s
 => "2015-09-10"
 ```
 
-** Convert to Ruby date object **
+**Convert to Ruby date object**
 
 ```sh
 ad_cal.to_s.to_date
