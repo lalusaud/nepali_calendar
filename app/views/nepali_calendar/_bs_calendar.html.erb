@@ -1,19 +1,19 @@
 <div class="bs_calendar">
   <%
-    if date_range.is_a?(Array)
-      date = date_range[0]
-      date_object = [ date ]
+    date_range = cal.date_range
+    # start_date = cal.start_date
 
-      while(date.to_s != date_range[1].to_s)
-        option = {year: date.year, month: date.month, day: date.day, wday: date.wday}
-        date = NepaliCalendar::BsCalendar.travel 1, option
-        date_object << date
-      end
+    date = date_range.first
+    date_object = [date]
+
+    while(date.to_s != date_range.last.to_s)
+      date = travel(1, date)
+      date_object << date
     end
   %>
-
+ 
   <%= link_to '&laquo; Previous'.html_safe, start_date: travel(-1, date_range[0]) %>
-  <%= "#{start_date.month_name}, #{start_date.year}" %>
+  <%= "#{cal.month_name}, #{cal.year}" %>
   <%= link_to 'Next &raquo;'.html_safe, start_date: travel(1, date_range[1]) %>
 
   <table class="table table-stripped">
@@ -30,11 +30,11 @@
         <tr>
           <% week.each do |day| %>
             <%= content_tag :td do %>
-              <%= block.call day %>
+              <%= block.present? ? block.call(day) : day %>
             <% end %>
           <% end %>
         </tr>
       <% end %>
     </tbody>
-  </table>
+  </table> 
 </div>

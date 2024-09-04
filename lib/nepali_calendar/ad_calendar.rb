@@ -38,7 +38,7 @@ module NepaliCalendar
 
         options = {year: ad.year, month: ad.month, day: ad.day, wday: ad.wday,
           month_name: Date::MONTHNAMES[ad.month], wday_name: ad.strftime("%A")}
-        new('', options)
+        new(options)
       end
     end
   end

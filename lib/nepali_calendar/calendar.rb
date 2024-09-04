@@ -3,29 +3,34 @@ require 'rails'
 module NepaliCalendar
   class Calendar
 
-    attr_accessor :view_context, :options, :year, :month,
+    attr_accessor :options, :year, :month,
                   :day, :wday, :month_name, :wday_name
 
-    def initialize(view_context, options={})
-      @view_context = view_context
-      @year = options[:year]
-      @month = options[:month]
-      @day = options[:day]
-      @wday = options[:wday]
-      @month_name = options[:month_name]
-      @wday_name = options[:wday_name]
+    def initialize(options={})
+      raise 'Invalid params' unless options.is_a?(Hash)
+
+      @year = options.fetch(:year, start_date.year)
+      @month = options.fetch(:month, start_date.month)
+      @day = options.fetch(:day, start_date.day)
+      @wday = options.fetch(:wday, start_date.wday)
+      @month_name = options.fetch(:month_name, '')
+      @wday_name = options.fetch(:wday_name, '')
+
+      # @view_context = view_context
     end
 
-    def render(&block)
-      view_context.render(
-        partial: 'nepali_calendar/bs_calendar',
-        locals: {
-          block: block,
-          start_date: start_date,
-          date_range: date_range
-        }
-      )
-    end
+    # def render(&block)
+    #   raise 'View context not defined!' if view_context.nil?
+
+    #   view_context.render(
+    #     partial: 'nepali_calendar/bs_calendar',
+    #     locals: {
+    #       block: block,
+    #       start_date: start_date,
+    #       date_range: date_range
+    #     }
+    #   )
+    # end
 
     def to_s
       "#{year}-#{two_digits(month)}-#{two_digits(day)}"
@@ -38,18 +43,21 @@ module NepaliCalendar
     alias_method :default_inspect, :inspect
     alias_method :inspect, :readable_inspect
 
+    def date_range
+      [
+        start_date.beginning_of_month.beginning_of_week,
+        start_date.end_of_month.end_of_week
+      ]
+    end
+
+    def start_date
+      Date.today
+    end
+
     private
 
       def two_digits(number)
         number.to_s.chars.unshift('0')[-2..-1].join
-      end
-
-      def date_range
-        (start_date.beginning_of_month.beginning_of_week..(start_date.end_of_month.end_of_week))
-      end
-
-      def start_date
-        Date.today
       end
 
       def self.total_days(date_eng, reference_date)
